@@ -1,7 +1,11 @@
 import glob
+import re
 
 NC_FILES = glob.glob("input/*CHANOBS*")
 STREAM_CSV = "input/stream_conc.csv"
+
+TIME_SERIES_PLOTS = [ re.sub(r'input/', 'output/', re.sub(r'CHANOBS*', 'TimeSeries.png', f)) for f in NC_FILES ]
+SCATTER_PLOTS = [ re.sub(r'input/', 'output/', re.sub(r'CHANOBS*', 'Scatter.png', f) ) for f in NC_FILES]
 
 STAT_CSV = "output/stat.csv"
 AVG_CSV = "output/avg.csv"
@@ -16,7 +20,9 @@ rule produceReport:
     input:
         REPORT_IN,
         STAT_CSV,
-        AVG_CSV
+        AVG_CSV,
+        TIME_SERIES_PLOTS,
+        SCATTER_PLOTS
     output:
         REPORT_OUT
     shell:
@@ -39,3 +45,20 @@ rule produceStat:
     shell:
         "touch {output}"
 
+rule produceTimeSeriesPlots:
+    input:
+        NC_FILES,
+        STREAM_CSV
+    output:
+        TIME_SERIES_PLOTS
+    shell:
+        "touch {output}"
+
+rule produceScatterPlots:
+    input:
+        NC_FILES,
+        STREAM_CSV
+    output:
+        SCATTER_PLOTS
+    shell:
+        "touch {output}"
