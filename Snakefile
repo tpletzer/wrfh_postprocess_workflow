@@ -1,11 +1,15 @@
 import glob
 import re
 
-NC_FILES = glob.glob("input/*CHANOBS*")
-STREAM_CSV = "input/stream_conc.csv"
+# directory containing the netcdf and csv files. This could be read from 
+# a config file if need be
+INPUT_DIR = "input"
 
-TIME_SERIES_PLOTS = [ re.sub(r'input/', 'output/', re.sub(r'CHANOBS*', 'TimeSeries.png', f)) for f in NC_FILES ]
-SCATTER_PLOTS = [ re.sub(r'input/', 'output/', re.sub(r'CHANOBS*', 'Scatter.png', f) ) for f in NC_FILES]
+NC_FILES = glob.glob(f"{INPUT_DIR}/*CHANOBS*")
+STREAM_CSV = f"{INPUT_DIR}/stream_conc.csv"
+
+TIME_SERIES_PLOTS = [ re.sub(f'{INPUT_DIR}/', 'output/', re.sub(r'CHANOBS*', 'TimeSeries.png', f)) for f in NC_FILES ]
+SCATTER_PLOTS = [ re.sub(f'{INPUT_DIR}/', 'output/', re.sub(r'CHANOBS*', 'Scatter.png', f) ) for f in NC_FILES]
 
 STAT_CSV = "output/stat.csv"
 AVG_CSV = "output/avg.csv"
