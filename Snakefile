@@ -1,9 +1,10 @@
 import glob
 import re
 
-# directory containing the netcdf and csv files. This could be read from 
-# a config file if need be
-INPUT_DIR = "input"
+configfile: config.yaml
+
+# directory containing the netcdf and csv files
+INPUT_DIR = config['input_dir']
 
 NC_FILES = glob.glob(f"{INPUT_DIR}/*CHANOBS*")
 STREAM_CSV = f"{INPUT_DIR}/stream_conc.csv"
