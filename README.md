@@ -17,7 +17,7 @@ mkdir input
 touch input/stream_conc.csv
 touch input/wrf-h_report.tex
 for n in 1 2 3 4; do
-    touch input/${n}_CHANOBS.nc
+    touch input/${n}_CHANOBS_DOMAIN1
 done
 ```
 

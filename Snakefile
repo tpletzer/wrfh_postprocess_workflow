@@ -9,8 +9,8 @@ INPUT_DIR = config['input_dir']
 NC_FILES = glob.glob(f"{INPUT_DIR}/*CHANOBS*")
 STREAM_CSV = f"{INPUT_DIR}/stream_conc.csv"
 
-TIME_SERIES_PLOTS = [ re.sub(f'{INPUT_DIR}/', 'output/', re.sub(r'CHANOBS*', 'TimeSeries.png', f)) for f in NC_FILES ]
-SCATTER_PLOTS = [ re.sub(f'{INPUT_DIR}/', 'output/', re.sub(r'CHANOBS*', 'Scatter.png', f) ) for f in NC_FILES]
+TIME_SERIES_PLOTS = [ re.sub(f'{INPUT_DIR}/', 'output/', re.sub(r'CHANOBS_DOMAIN1', 'TimeSeries.png', f)) for f in NC_FILES ]
+SCATTER_PLOTS = [ re.sub(f'{INPUT_DIR}/', 'output/', re.sub(r'CHANOBS_DOMAIN1', 'Scatter.png', f) ) for f in NC_FILES]
 
 STAT_CSV = "output/stat.csv"
 AVG_CSV = "output/avg.csv"
