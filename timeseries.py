@@ -31,13 +31,14 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files/',
     @param ob_csv name of csv file for observations
     @param  save_dir directory to save timeseries png
 
+
     """
 
     chanobs_baseline = xr.open_mfdataset(file_dir + '*CHANOBS*', combine='by_coords') #open model output netcdfs
 
     #extract time from the first and last file in sim (in UTC)
     files = glob.glob(file_dir + '*CHANOBS*')
-    files = sorted(files) 
+    files = sorted(files)
     t0_str = files[0].split('/')[-1].split('.')[0] #extract first time stamp of simulation
     t0_utc = pd.Timestamp(t0_str,tz='UTC') # convert to time
     t0_mcm = t0_utc.tz_convert('Antarctica/Mcmurdo') #convert to mcm timezone
