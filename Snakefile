@@ -1,7 +1,7 @@
 import glob
 import re
 
-configfile: config.yaml
+configfile: "config.yaml"
 
 # directory containing the netcdf and csv files
 INPUT_DIR = config['input_dir']

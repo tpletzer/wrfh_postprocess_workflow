@@ -6,7 +6,7 @@ You will need to have "Snakemake" installed. The easiest is to create a conda en
 ```
 conda create -p /path/to/snakemake_env
 conda activate /path/to/snakemake_env
-pip install snakemake
+conda install -c conda-forge -c bioconda snakemake
 ```
 
 ## How to run a simple test
@@ -15,6 +15,7 @@ Create some fake data, for example
 ```
 mkdir input
 touch input/stream_conc.csv
+touch input/wrf-h_report.tex
 for n in 1 2 3 4; do
     touch input/$n_CHANOBS.nc
 done
@@ -35,6 +36,8 @@ Now remove some output files and rerun the workflow. For instance,
 rm output/wrf-h_report.pdf
 snakemake -j 1
 ```
-will recreate the report.
+will recreate only the report.
+
+
 
 
