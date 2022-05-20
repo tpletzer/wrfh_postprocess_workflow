@@ -2,9 +2,18 @@ import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
+import defopt
 
-def plot_scatter(station_name, save_dir):
+def plot_scatter(*, save_dir: str='/nesi/nobackup/uoo03104/plots/', station_name: str='bohner_b5'):
 
+
+    """
+    Plot scatterplot of modelled vs. observed
+    
+    @param  save_dir directory to save timeseries png
+    @param station_name LTER network name of stream gauge
+
+    """
     df = pd.read_csv(f'{save_dir}/{station_name}.csv')
     df['DATE_TIME'] = pd.to_datetime(df['DATE_TIME'])
 
@@ -28,3 +37,6 @@ def plot_scatter(station_name, save_dir):
 
     plt.savefig(f'{save_dir}/scatter_{station_name}.png')
     plt.close(fig)
+
+if __name__ == "__main__":
+    defopt.run(plot_scatter)
