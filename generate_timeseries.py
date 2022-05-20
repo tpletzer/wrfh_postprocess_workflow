@@ -48,19 +48,21 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files/',
     tf_utc = pd.Timestamp(tf_str,tz='UTC') # convert to time
     tf_mcm = tf_utc.tz_convert('Antarctica/Mcmurdo') #convert to mcm timezone
     tf = str(tf_mcm)[0:-6] #id for observation csv '2018-12-13 14:00:00'
-
+    # breakpoint()
     #open observational data
     obs = pd.read_csv(ob_dir + ob_csv, dtype=str)
+    obs = obs[obs['STRMGAGEID']==station_name]
     obs['DATE_TIME'] = pd.to_datetime(obs['DATE_TIME']) #convert DATE_TIME to date time obj
-
-    obs = obs.loc[obs.DATE_TIME >= t0, :] # extract same times as the simulation
+    obs['DISCHARGE RATE']=pd.to_numeric(obs['DISCHARGE RATE'])
+    
+    obs = obs.loc[obs.DATE_TIME >= t0, :] # extract same times as the simulation in local time
     obs = obs.loc[obs.DATE_TIME <= tf, :] 
 
     obs_piv = obs.pivot(index="DATE_TIME", columns="STRMGAGEID", values="DISCHARGE RATE") # DISCHARGE RATE is in cubic m/s and includes canada
     obs_piv.index = obs_piv.index.tz_localize('Antarctica/Mcmurdo').tz_convert('UTC') 
     obs_piv = obs_piv.resample('H').mean()
 
-    df = pd.Dataframe()
+    df = pd.DataFrame()
     df['streamflow_obs'] = []
     df['streamflow_model'] = []
     df['time'] = []
@@ -77,7 +79,7 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files/',
     except KeyError:
         pass
         
-    df.to_csv(f'{station_name}.csv')
+    df.to_csv(f'{save_dir}/{station_name}.csv')
 
 
 if __name__ == "__main__":
