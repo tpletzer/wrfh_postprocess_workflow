@@ -59,7 +59,7 @@ rule produceTimeSeriesPlots:
     output:
         TIME_SERIES_PLOTS
     shell:
-        "python timeseries.py --file_dir={FILE_DIR} --ob_dir={OB_DIR} --ob_csv={OB_CSV} --save_dir={SAVE_DIR}"
+        "python timeseries.py --file-dir={FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR}"
 
 rule produceScatterPlots:
     input:
