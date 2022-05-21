@@ -9,30 +9,45 @@ OB_DIR = config['ob_dir']
 OB_CSV = config['ob_csv']
 SAVE_DIR = config['save_dir']
 
-STATION_NAMES = ['aiken_f5', 'bohner_b5'] #, 'canada_f1', 'harnish_f11', 'lawson_b3', 'onyx_vnda', 'onyx_lwright']
-STATION_FILES = [f'{SAVE_DIR}/{sname}.csv' for sname in STATION_NAMES]
+STATION_NAMES = ["aiken_f5", "bohner_b5"] #, 'canada_f1', 'harnish_f11', 'lawson_b3', 'onyx_vnda', 'onyx_lwright']
+expand(f"{sname}" for sname in STATION_NAMES)
 
 NC_FILES = glob.glob(f"{FILE_DIR}/*CHANOBS*")
 
-
 rule all:
     input:
-        STATION_FILES
+        expand(f"{sname}.csv" for sname in STATION_NAMES)
 
-rule produceStation_aiken_f5:
-    input:
-        NC_FILES,
-        f'{OB_DIR}/{OB_CSV}'
-    output:
-        "{SAVE_DIR}/aiken_f5.csv"
-    shell:
-        "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station-name='aiken_f5'"
+# rule produceStationData:
+#     input:
+#         NC_FILES,
+#         f'{OB_DIR}/{OB_CSV}'
+#     output:
+#         '{SAVE_DIR}/{sname}.csv'
+#     shell:
+#         "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station-name={sname}"
 
-rule produceStation_bohner_b5:
-    input:
-        NC_FILES,
-        f'{OB_DIR}/{OB_CSV}'
+
+rule generate:
     output:
-        "{SAVE_DIR}/bohner_b5.csv"
+        "{sname}.csv"
     shell:
-        "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station-name='bohner_b5'"
+        "touch {output}"
+
+
+# CASES = ["a", "b"]
+# expand(f"{case}" for case in CASES)
+
+# rule all:
+#     input:
+#         expand(f"{case}.txt" for case in CASES)
+
+# rule clean:
+#     shell:
+#         "rm *.txt"
+
+# rule generate:
+#     output:
+#         "{case}.txt"
+#     shell:
+#         "touch {output}"
