@@ -26,7 +26,7 @@ rule produceStation_aiken_f5:
     output:
         "{SAVE_DIR}/aiken_f5.csv"
     shell:
-        "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station_name='aiken_f5'"
+        "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station-name='aiken_f5'"
 
 rule produceStation_bohner_b5:
     input:
@@ -35,4 +35,4 @@ rule produceStation_bohner_b5:
     output:
         "{SAVE_DIR}/bohner_b5.csv"
     shell:
-        "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station_name='bohner_b5'"
+        "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station-name='bohner_b5'"

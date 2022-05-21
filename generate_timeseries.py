@@ -19,10 +19,10 @@ fid_dict = {
     }
 
 
-def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files/', 
-                ob_dir: str='/nesi/nobackup/uoo03104/validation_data/streamgagedata/', 
+def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files', 
+                ob_dir: str='/nesi/nobackup/uoo03104/validation_data/streamgagedata', 
                 ob_csv: str='stream_conc.csv',
-                save_dir: str='/nesi/nobackup/uoo03104/plots/', station_name: str='bohner_b5'):  
+                save_dir: str='/nesi/nobackup/uoo03104/plots', station_name: str='bohner_b5'):  
     """
     Postprocessing workflow of channel observations
 
@@ -30,14 +30,15 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files/',
     @param  ob_dir directory of observation csv
     @param ob_csv name of csv file for observations
     @param  save_dir directory to save timeseries png
+    @param station_name LTER network name of stream gauge
 
 
     """
 
-    chanobs_baseline = xr.open_mfdataset(file_dir + '*CHANOBS*', combine='by_coords') #open model output netcdfs
+    chanobs_baseline = xr.open_mfdataset(f'{file_dir}/*CHANOBS*', combine='by_coords') #open model output netcdfs
 
     #extract time from the first and last file in sim (in UTC)
-    files = glob.glob(file_dir + '*CHANOBS*')
+    files = glob.glob(f'{file_dir}/*CHANOBS*')
     files = sorted(files)
     t0_str = files[0].split('/')[-1].split('.')[0] #extract first time stamp of simulation
     t0_utc = pd.Timestamp(t0_str,tz='UTC') # convert to time
@@ -50,7 +51,7 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files/',
     tf = str(tf_mcm)[0:-6] #id for observation csv '2018-12-13 14:00:00'
     # breakpoint()
     #open observational data
-    obs = pd.read_csv(ob_dir + ob_csv, dtype=str)
+    obs = pd.read_csv(f'{ob_dir}/{ob_csv}', dtype=str)
     obs = obs[obs['STRMGAGEID']==station_name]
     obs['DATE_TIME'] = pd.to_datetime(obs['DATE_TIME']) #convert DATE_TIME to date time obj
     obs['DISCHARGE RATE']=pd.to_numeric(obs['DISCHARGE RATE'])
