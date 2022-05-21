@@ -1,1 +1,4 @@
-input_dir: input
+file_dir: '/nesi/nobackup/output_files/'
+ob_dir: '/nesi/nobackup/uoo03104/validation_data/streamgagedata/'
+ob_csv: 'stream_conc.csv'
+save_dir: '/nesi/nobackup/uoo03104/plots/'
