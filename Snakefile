@@ -6,66 +6,33 @@ configfile: "config.yaml"
 # directory containing the netcdf and csv files
 FILE_DIR = config['file_dir']
 OB_DIR = config['ob_dir']
-SAVE_DIR = config['save_dir']
 OB_CSV = config['ob_csv']
-STREAM_CSV = f'{OB_DIR}/{OB_CSV}'
+SAVE_DIR = config['save_dir']
+
+STATION_NAMES = ['aiken_f5', 'bohner_b5'] #, 'canada_f1', 'harnish_f11', 'lawson_b3', 'onyx_vnda', 'onyx_lwright']
+STATION_FILES = [f'{SAVE_DIR}/{sname}.csv' for sname in STATION_NAMES]
 
 NC_FILES = glob.glob(f"{FILE_DIR}/*CHANOBS*")
 
 
-TIME_SERIES_PLOTS = [ re.sub(f'{FILE_DIR}/', f'{SAVE_DIR}/', re.sub(r'CHANOBS_DOMAIN1', 'TimeSeries.png', f)) for f in NC_FILES ]
-SCATTER_PLOTS = [ re.sub(f'{FILE_DIR}/', f'{SAVE_DIR}/', re.sub(r'CHANOBS_DOMAIN1', 'Scatter.png', f) ) for f in NC_FILES]
-
-STAT_CSV = f'{SAVE_DIR}/stat.csv'
-AVG_CSV = f'{SAVE_DIR}/avg.csv'
-REPORT_OUT = f"{SAVE_DIR}/wrf-h_report.pdf"
-
 rule all:
     input:
-        REPORT_OUT
+        STATION_FILES
 
-rule produceReport:
-    input:
-        STAT_CSV,
-        AVG_CSV,
-        TIME_SERIES_PLOTS,
-        SCATTER_PLOTS
-    output:
-        REPORT_OUT
-    shell:
-        "touch {output}"
-
-rule produceAvg:
-    input:
-        STAT_CSV
-    output:
-        AVG_CSV
-    shell:
-        "touch {output}"
-
-rule produceStat:
+rule produceStation_aiken_f5:
     input:
         NC_FILES,
-        STREAM_CSV
+        f'{OB_DIR}/{OB_CSV}'
     output:
-        STAT_CSV
+        "{SAVE_DIR}/aiken_f5.csv"
     shell:
-        "touch {output}"
+        "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station_name='aiken_f5'"
 
-rule produceTimeSeriesPlots:
+rule produceStation_bohner_b5:
     input:
         NC_FILES,
-        STREAM_CSV
+        f'{OB_DIR}/{OB_CSV}'
     output:
-        TIME_SERIES_PLOTS
+        "{SAVE_DIR}/bohner_b5.csv"
     shell:
-        "python timeseries.py --file-dir={FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR}"
-
-rule produceScatterPlots:
-    input:
-        NC_FILES,
-        STREAM_CSV
-    output:
-        SCATTER_PLOTS
-    shell:
-        "touch {output}"
+        "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station_name='bohner_b5'"
