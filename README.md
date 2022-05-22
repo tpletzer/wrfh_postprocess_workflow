@@ -58,6 +58,9 @@ with the appropriate commands.
 
 You can specifyy the directory where the input files are located in the `config.yaml` file.
 
+To create a png with the workflow diagram:
+$snakemake --dag | dot -Tpng > workflow.png
+
 To make a report, first run:
 $snakemake -j 1 clean
 $snakemake -j 8 
