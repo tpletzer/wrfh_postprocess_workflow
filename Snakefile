@@ -14,11 +14,12 @@ NC_FILES = glob.glob(f"{FILE_DIR}/*CHANOBS*")
 
 rule all:
     input:
-        expand(f'{SAVE_DIR}/timeseries_{sname}.png' for sname in STATION_NAMES)
+        expand(f'{SAVE_DIR}/timeseries_{sname}.png' for sname in STATION_NAMES),
+        expand(f'{SAVE_DIR}/scatter_{sname}.png' for sname in STATION_NAMES)
 
 rule clean:
     shell:
-        "rm {SAVE_DIR}/*.csv"
+        "rm {SAVE_DIR}/*.csv {SAVE_DIR}/*.png"
 
 rule produceStationData:
     input:
@@ -37,6 +38,13 @@ rule createTimeseriesPlot:
     shell:
         "python plot_timeseries.py --save-dir={SAVE_DIR} --station-name={wildcards.sname}"
 
+rule createScatterPlot:
+    input:
+        "{SAVE_DIR}/{sname}.csv"
+    output:
+        "{SAVE_DIR}/scatter_{sname}.png"
+    shell:
+        "python plot_scatter.py --save-dir={SAVE_DIR} --station-name={wildcards.sname}"
 
 
 

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import defopt
 
-def plot_scatter(*, save_dir: str='/nesi/nobackup/uoo03104/plots/', station_name: str='bohner_b5'):
+def plot_scatter(*, save_dir: str='/nesi/nobackup/uoo03104/plots', station_name: str='bohner_b5'):
 
 
     """
