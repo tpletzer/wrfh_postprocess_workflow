@@ -18,6 +18,9 @@ fid_dict = {
     'onyx_lwright': 56,
     }
 
+#station_names in obs ['aiken_f5', 'bohner_b5', 'canada_f1', 'common_c1', 'crescent_f8',
+       # 'delta_f10', 'green_f9', 'lawson_b3', 'lostseal_f3', 'onyx_lwright',
+       # 'onyx_vnda', 'vguerard_f6'], 
 
 def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files', 
                 ob_dir: str='/nesi/nobackup/uoo03104/validation_data/streamgagedata', 
@@ -52,6 +55,8 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files',
     # breakpoint()
     #open observational data
     obs = pd.read_csv(f'{ob_dir}/{ob_csv}', dtype=str)
+    breakpoint()
+    print(obs[obs['STRMGAGEID']])
     obs = obs[obs['STRMGAGEID']==station_name]
     obs['DATE_TIME'] = pd.to_datetime(obs['DATE_TIME']) #convert DATE_TIME to date time obj
     obs['DISCHARGE RATE']=pd.to_numeric(obs['DISCHARGE RATE'])
