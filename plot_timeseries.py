@@ -3,7 +3,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import defopt
 
-def plot_timeseries(*, save_dir: str='/nesi/nobackup/uoo03104/plots/', station_name: str='bohner_b5'):
+def plot_timeseries(*, save_dir: str='/nesi/nobackup/uoo03104/plots', station_name: str='bohner_b5'):
 
     """
     Plot timeseries of modelled and observed vs. datetime
@@ -30,9 +30,8 @@ def plot_timeseries(*, save_dir: str='/nesi/nobackup/uoo03104/plots/', station_n
     lines2, labels2 = ax2.get_legend_handles_labels()
     ax2.legend(lines + lines2, labels + labels2)
     ax1.set_xlabel(f'Datetime (UTC)')
-    breakpoint()
-    
-    plt.savefig(f'{save_dir}timeseries_{station_name}.png')
+
+    plt.savefig(f'{save_dir}/timeseries_{station_name}.png')
     plt.close(fig)
 
 
