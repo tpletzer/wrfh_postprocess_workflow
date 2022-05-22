@@ -47,6 +47,6 @@ snakemake --report report.html
 
 Edit the `mahuika.json` file. Then type
 ```
-snakemake -j 999 --cluster-config mahuika.json --cluster "sbatch -A {cluster.account} -p {cluster.partition} -n {cluster.n}  -t {cluster.time}"
+snakemake -j 999 --cluster-config mahuika.json --cluster "sbatch --account={cluster.account} --ntasks={cluster.ntasks}  --time={cluster.time}"
 ```
 
