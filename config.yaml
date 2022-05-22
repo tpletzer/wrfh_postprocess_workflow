@@ -1,4 +1,5 @@
-file_dir: 'input'
-ob_dir: 'input'
-ob_csv: 'stream_conc.csv'
-save_dir: 'output'
+file_dir: input
+ob_dir: input
+ob_csv: stream_conc.csv
+save_dir: output
+station_names: [aiken_f5, bohner_b5]
