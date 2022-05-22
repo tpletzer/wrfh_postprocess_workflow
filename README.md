@@ -9,24 +9,15 @@ conda activate /path/to/snakemake_env
 conda install -c conda-forge -c bioconda snakemake
 ```
 
-## How to run a simple test
+## How to check the syntax of your workflow
 
-Create some fake data, for example
-```
-mkdir input
-touch input/stream_conc.csv
-touch input/wrf-h_report.tex
-for n in 1 2 3 4; do
-    touch input/${n}_CHANOBS_DOMAIN1
-done
-```
-
-Check that the workflow runs:
 ```
 snakemake --dry-run
 ```
 
-Run the workflow using 4 workers
+## How to run the workflow
+
+Using 4 workers (for instance)
 ```
 snakemake -j 4
 ```
@@ -39,37 +30,23 @@ $ ls output/
 2_Scatter.png.nc	3_TimeSeries.png.nc	avg.csv
 ```
 
-Now remove some output files and rerun the workflow. For instance, 
-```
-rm output/wrf-h_report.pdf
-snakemake -j 1
-```
-will recreate only the report.
-
-
-## To do 
-
-Edit the Snakefile and replace the sections
-```
-    shell:
-        "touch {output}"
-```
-with the appropriate commands.
-
-You can specifyy the directory where the input files are located in the `config.yaml` file.
-
-To create a png with the workflow diagram:
-$snakemake --dag | dot -Tpng > workflow.png
-
-To make a report, first run:
-$snakemake -j 1 clean
-$snakemake -j 8 
-then 
-$snakemake --report report.html
-
-## How to submit to mahuika
+## How to clean up the output directory
 
 ```
-snakemake -j 999 --cluster-config mahuika.json
+snakemake -j 1 clean
+```
+
+## How to create a report
+
+Once you have run your workflow,
+```
+snakemake --report report.html
+```
+
+## How to submit yyour workflow to mahuika
+
+Edit the `mahuika.json` file. Then type
+```
+snakemake -j 999 --cluster-config mahuika.json --cluster "sbatch --account={cluster.account} --ntasks={cluster.ntasks} --time={cluster.time}"
 ```
 
