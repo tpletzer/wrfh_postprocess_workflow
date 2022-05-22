@@ -58,5 +58,9 @@ with the appropriate commands.
 
 You can specifyy the directory where the input files are located in the `config.yaml` file.
 
-
+To make a report, first run:
+$snakemake -j 1 clean
+$snakemake -j 8 
+then 
+$snakemake --report report.html
 
