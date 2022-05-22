@@ -67,3 +67,9 @@ $snakemake -j 8
 then 
 $snakemake --report report.html
 
+## How to submit to mahuika
+
+```
+snakemake -j 999 --cluster-config mahuika.json
+```
+

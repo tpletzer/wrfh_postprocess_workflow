@@ -1,0 +1,12 @@
+{
+    "__default__" :
+    {
+        "account" : "uoo03104",
+        "time" : "00:10:00",
+        "ntasks" : 1
+    },
+    "produceStationData" :
+    {
+        "time" : "01:00:00"
+    }
+}
