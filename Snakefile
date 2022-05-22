@@ -19,7 +19,7 @@ rule all:
 
 rule clean:
     shell:
-        "rm {SAVE_DIR}/*.csv {SAVE_DIR}/*.png"
+        "rm {SAVE_DIR}/*.csv {SAVE_DIR}/*.png *.html"
 
 rule produceStationData:
     input:
@@ -34,7 +34,7 @@ rule createTimeseriesPlot:
     input:
         "{SAVE_DIR}/{sname}.csv"
     output:
-        "{SAVE_DIR}/timeseries_{sname}.png"
+        report("{SAVE_DIR}/timeseries_{sname}.png", category="timeseries plot")
     shell:
         "python plot_timeseries.py --save-dir={SAVE_DIR} --station-name={wildcards.sname}"
 
@@ -42,7 +42,7 @@ rule createScatterPlot:
     input:
         "{SAVE_DIR}/{sname}.csv"
     output:
-        "{SAVE_DIR}/scatter_{sname}.png"
+        report("{SAVE_DIR}/scatter_{sname}.png", category="scatter plot")
     shell:
         "python plot_scatter.py --save-dir={SAVE_DIR} --station-name={wildcards.sname}"
 
