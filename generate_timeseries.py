@@ -68,7 +68,11 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files',
     df['streamflow_model'] = []
     df['time'] = []
 
-    try:
+    #if station_name in fid_dict:
+    if obs_piv.empty:
+        print(f'WARNING: station name {station_name} has no stream gage data')
+        df = obs_piv
+    else:
         fid = fid_dict[station_name]
         obs_station = obs_piv[station_name]
         model_station = chanobs_baseline.sel(feature_id=fid).streamflow
@@ -76,9 +80,6 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files',
         df['streamflow_obs'] = obs_station
         df['streamflow_model'] = model_station
         df['time'] = time
-
-    except KeyError:
-        pass
         
     df.to_csv(f'{save_dir}/{station_name}.csv')
 
