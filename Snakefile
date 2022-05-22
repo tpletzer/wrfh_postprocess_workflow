@@ -14,12 +14,11 @@ NC_FILES = glob.glob(f"{FILE_DIR}/*CHANOBS*")
 
 rule all:
     input:
-        expand(f'{SAVE_DIR}/{sname}.csv' for sname in STATION_NAMES)
+        expand(f'{SAVE_DIR}/timeseries_{sname}.png' for sname in STATION_NAMES)
 
 rule clean:
     shell:
         "rm {SAVE_DIR}/*.csv"
-
 
 rule produceStationData:
     input:
@@ -29,6 +28,16 @@ rule produceStationData:
         "{SAVE_DIR}/{sname}.csv"
     shell:
         "python generate_timeseries.py -f {FILE_DIR} --ob-dir={OB_DIR} --ob-csv={OB_CSV} --save-dir={SAVE_DIR} --station-name={wildcards.sname}"
+
+rule createTimeseriesPlot:
+    input:
+        "{SAVE_DIR}/{sname}.csv"
+    output:
+        "{SAVE_DIR}/timeseries_{sname}.png"
+    shell:
+        "python plot_timeseries.py --save-dir={SAVE_DIR} --station-name={wildcards.sname}"
+
+
 
 
 # CASES = ["a", "b"]
