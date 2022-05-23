@@ -55,8 +55,6 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files',
     # breakpoint()
     #open observational data
     obs = pd.read_csv(f'{ob_dir}/{ob_csv}', dtype=str)
-    breakpoint()
-    print(obs[obs['STRMGAGEID']])
     obs = obs[obs['STRMGAGEID']==station_name]
     obs['DATE_TIME'] = pd.to_datetime(obs['DATE_TIME']) #convert DATE_TIME to date time obj
     obs['DISCHARGE RATE']=pd.to_numeric(obs['DISCHARGE RATE'])
