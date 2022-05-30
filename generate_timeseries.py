@@ -67,9 +67,9 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files',
     obs_piv = obs_piv.resample('H').mean()
 
     df = pd.DataFrame()
-    df['streamflow_obs'] = []
+    #df['streamflow_obs'] = []
     df['streamflow_model'] = []
-    df['time'] = []
+    df['DATE_TIME'] = []
 
     #if station_name in fid_dict:
     if obs_piv.empty:
@@ -79,11 +79,14 @@ def main_chanobs(*, file_dir: str='/nesi/nobackup/output_files',
         fid = fid_dict[station_name]
         obs_station = obs_piv[station_name]
         model_station = chanobs_baseline.sel(feature_id=fid).streamflow
-        time = obs_piv.index
-        df['streamflow_obs'] = obs_station
+        time = model_station.time.values
+        df['DATE_TIME'] = time
+        df.index = df.DATE_TIME
         df['streamflow_model'] = model_station
-        df['time'] = time
-        
+        df = df.tz_localize('UTC')
+        ob_df = pd.DataFrame({'streamflow_obs': obs_station})
+        df = pd.concat([df, ob_df], axis=1)
+
     df.to_csv(f'{save_dir}/{station_name}.csv')
 
 

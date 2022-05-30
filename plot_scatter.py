@@ -35,7 +35,9 @@ def plot_scatter(*, save_dir: str='/nesi/nobackup/uoo03104/plots', station_name:
     ax.set_ylabel(f'Modelled streamflow (m3/s)', fontsize=12)
     ax.set_xlabel(f'Observed streamflow (m3/s)', fontsize=12)
 
-    plt.savefig(f'{save_dir}/scatter_{station_name}.png')
+    filename = f'{save_dir}/scatter_{station_name}.png'
+    print(f'saving plot in {filename}...')
+    plt.savefig(filename)
     plt.close(fig)
 
 if __name__ == "__main__":

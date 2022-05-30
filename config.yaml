@@ -1,7 +1,7 @@
-file_dir: /nesi/project/uoo03104/code/wrf_hydroCrocus_mahuika/Taylor200_glac/NWM
+file_dir: /nesi/nobackup/uoo03104/output_files_nocrocus
 ob_dir: /nesi/nobackup/uoo03104/validation_data/streamgagedata
 ob_csv: stream_conc.csv
-save_dir: /nesi/nobackup/uoo03104/plots
+save_dir: /nesi/nobackup/uoo03104/output_files_nocrocus
 station_names: [aiken_f5, bohner_b5, canada_f1, lawson_b3, onyx_vnda, onyx_lwright]
 
 
